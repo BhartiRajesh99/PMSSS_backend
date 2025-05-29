@@ -8,7 +8,11 @@ import fs from "fs";
 import path from "path";
 
 // Ensure uploads directory exists
-const uploadsDir = path.join(process.cwd(), "uploads");
+const uploadsDir =
+  process.env.NODE_ENV === "production"
+    ? "/tmp/uploads" // Use /tmp in production (serverless)
+    : path.join(process.cwd(), "uploads"); // Use local directory in development
+
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }

@@ -44,8 +44,14 @@ app.use("/api/documents", documentRoutes);
 app.use("/api/verify", verifyRoutes);
 app.use("/api/payments", paymentRoutes);
 
+// Configure uploads directory based on environment
+const uploadsDir =
+  process.env.NODE_ENV === "production"
+    ? "/tmp/uploads" // Use /tmp in production (serverless)
+    : path.join(__dirname, "uploads"); // Use local directory in development
+
 // Serve static files
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(uploadsDir));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -58,16 +64,19 @@ app.use((err, req, res, next) => {
 });
 
 // Create uploads directory if it doesn't exist
-const uploadsDir = path.join(__dirname, "uploads");
 fs.access(uploadsDir)
-  .catch(() => fs.mkdir(uploadsDir))
+  .catch(() => fs.mkdir(uploadsDir, { recursive: true }))
   .then(() => {
     // Connect to MongoDB and start server
     connectDB()
       .then(() => {
         console.log("Connected to MongoDB");
         const PORT = process.env.PORT || 5000;
-        
+        app.listen(PORT, () => {
+          console.log(
+            `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+          );
+        });
       })
       .catch((error) => {
         console.error("MongoDB connection error:", error);
