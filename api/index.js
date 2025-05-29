@@ -67,12 +67,7 @@ fs.access(uploadsDir)
       .then(() => {
         console.log("Connected to MongoDB");
         const PORT = process.env.PORT || 5000;
-        app.listen(PORT, () => {
-          console.log(
-            `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
-          );
-          console.log(`JWT Secret configured: ${!!process.env.JWT_SECRET}`);
-        });
+        
       })
       .catch((error) => {
         console.error("MongoDB connection error:", error);
