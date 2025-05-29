@@ -12,14 +12,14 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import fs from "fs/promises";
-import connectDB from "./config/db.js";
-import authRoutes from "./routes/auth.js";
-import studentRoutes from "./routes/student.js";
-import sagRoutes from "./routes/sag.js";
-import financeRoutes from "./routes/finance.js";
-import documentRoutes from "./routes/documentRoutes.js";
-import verifyRoutes from "./routes/verify.js";
-import paymentRoutes from "./routes/payments.js";
+import connectDB from "../config/db.js";
+import authRoutes from "../routes/auth.js";
+import studentRoutes from "../routes/student.js";
+import sagRoutes from "../routes/sag.js";
+import financeRoutes from "../routes/finance.js";
+import documentRoutes from "../routes/documentRoutes.js";
+import verifyRoutes from "../routes/verify.js";
+import paymentRoutes from "../routes/payments.js";
 
 // Create Express app
 const app = express();
