@@ -35,6 +35,15 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
 
+// Root route
+app.get("/", (req, res) => {
+  res.json({
+    message: "Welcome to PMSSS API",
+    status: "Server is running",
+    environment: process.env.NODE_ENV || "development",
+  });
+});
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/student", studentRoutes);
@@ -52,6 +61,14 @@ const uploadsDir =
 
 // Serve static files
 app.use("/uploads", express.static(uploadsDir));
+
+// 404 handler
+app.use((req, res, next) => {
+  res.status(404).json({
+    success: false,
+    error: "Route not found",
+  });
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -87,3 +104,6 @@ fs.access(uploadsDir)
     console.error("Error setting up uploads directory:", error);
     process.exit(1);
   });
+
+// Export the Express app for Vercel
+export default app;
