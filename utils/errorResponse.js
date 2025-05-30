@@ -11,6 +11,7 @@ class ErrorResponse extends Error {
     this.response = response;
     this.data = null;
     this.message = message;
+    this.success = false;
   }
 }
 
