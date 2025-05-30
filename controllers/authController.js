@@ -237,7 +237,7 @@ export const loginStudent = async (req, res, next) => {
     console.log("Student lookup result:", student ? "Found" : "Not found");
 
     if (!student) {
-      return res.json(
+      return next(
         new ErrorResponse(
           "No student account found with this email. Please register first.",
           404
@@ -261,7 +261,7 @@ export const loginStudent = async (req, res, next) => {
   } catch (error) {
     console.error("Student login error:", {
       error: error,
-      message: error.message
+      message: error.message,
     });
     return next(new ErrorResponse("Server error during login", 500));
   }

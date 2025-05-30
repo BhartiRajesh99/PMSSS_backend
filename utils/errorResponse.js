@@ -6,11 +6,11 @@ class ErrorResponse extends Error {
     response = null
   ) {
     super(message);
+    this.message = message;
     this.statusCode = statusCode;
     this.errorCode = errorCode;
     this.response = response;
     this.data = null;
-    this.message = message;
     this.success = false;
   }
 }
