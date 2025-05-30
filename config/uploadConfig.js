@@ -1,4 +1,5 @@
 import path from "path";
+import fs from "fs";
 
 // Configure uploads directory based on environment
 export const uploadsDir =
