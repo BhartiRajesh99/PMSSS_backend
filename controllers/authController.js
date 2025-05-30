@@ -261,8 +261,7 @@ export const loginStudent = async (req, res, next) => {
   } catch (error) {
     console.error("Student login error:", {
       error: error,
-      message: error.message,
-      stack: error.stack,
+      message: error.message
     });
     return next(new ErrorResponse("Server error during login", 500));
   }
