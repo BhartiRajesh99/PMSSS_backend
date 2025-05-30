@@ -49,6 +49,26 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "healthy" });
 });
 
+
+// Get all documents (SAG Bureau only)
+app.get(
+  "/all",
+  auth,
+  authorize("sag_bureau", "finance_bureau"),
+  async (req, res) => {
+    try {
+      const documents = await Document.find()
+        .populate("student", "name email studentDetails")
+        .sort({ createdAt: -1 });
+      res.json(documents);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching documents" });
+    }
+  }
+);
+
+
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/student", studentRoutes);
