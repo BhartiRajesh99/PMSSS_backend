@@ -44,6 +44,11 @@ app.get("/", (req, res) => {
   });
 });
 
+// Health check route
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "healthy" });
+});
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/student", studentRoutes);
@@ -80,30 +85,33 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Create uploads directory if it doesn't exist
-fs.access(uploadsDir)
-  .catch(() => fs.mkdir(uploadsDir, { recursive: true }))
-  .then(() => {
-    // Connect to MongoDB and start server
-    connectDB()
-      .then(() => {
-        console.log("Connected to MongoDB");
-        const PORT = process.env.PORT || 5000;
-        app.listen(PORT, () => {
-          console.log(
-            `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
-          );
-        });
-      })
-      .catch((error) => {
-        console.error("MongoDB connection error:", error);
-        process.exit(1);
+// Initialize server
+const initializeServer = async () => {
+  try {
+    // Create uploads directory if it doesn't exist
+    await fs.mkdir(uploadsDir, { recursive: true });
+
+    // Connect to MongoDB
+    await connectDB();
+    console.log("Connected to MongoDB");
+
+    // Start server only if not in production (Vercel)
+    if (process.env.NODE_ENV !== "production") {
+      const PORT = process.env.PORT || 5000;
+      app.listen(PORT, () => {
+        console.log(
+          `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+        );
       });
-  })
-  .catch((error) => {
-    console.error("Error setting up uploads directory:", error);
+    }
+  } catch (error) {
+    console.error("Server initialization error:", error);
     process.exit(1);
-  });
+  }
+};
+
+// Initialize server
+initializeServer();
 
 // Export the Express app for Vercel
 export default app;
