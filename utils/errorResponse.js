@@ -1,10 +1,9 @@
 class ErrorResponse extends Error {
   constructor(
-    message,
+    message = "Something went wrong",
     statusCode,
     errorCode = null,
-    response = null,
-    message = "Something went wrong"
+    response = null
   ) {
     super(message);
     this.statusCode = statusCode;
