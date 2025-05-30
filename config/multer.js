@@ -1,11 +1,6 @@
 import multer from "multer";
 import path from "path";
-
-// Configure uploads directory based on environment
-const uploadsDir =
-  process.env.NODE_ENV === "production"
-    ? "/tmp/uploads" // Use /tmp in production (serverless)
-    : path.join(process.cwd(), "uploads"); // Use local directory in development
+import { uploadsDir } from "./uploadConfig.js";
 
 // Configure multer storage
 const storage = multer.diskStorage({

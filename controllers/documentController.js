@@ -6,16 +6,10 @@ import {
 } from "../utils/cloudinary.js";
 import fs from "fs";
 import path from "path";
+import { uploadsDir, ensureUploadsDir } from "../config/uploadConfig.js";
 
 // Ensure uploads directory exists
-const uploadsDir =
-  process.env.NODE_ENV === "production"
-    ? "/tmp/uploads" // Use /tmp in production (serverless)
-    : path.join(process.cwd(), "uploads"); // Use local directory in development
-
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-}
+ensureUploadsDir();
 
 // @desc    Get all documents for a student
 // @route   GET /api/documents/student
