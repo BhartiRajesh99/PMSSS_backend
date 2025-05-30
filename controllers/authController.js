@@ -237,10 +237,12 @@ export const loginStudent = async (req, res, next) => {
     console.log("Student lookup result:", student ? "Found" : "Not found");
 
     if (!student) {
-      throw new ErrorResponse(
+      return res.json(
+        new ErrorResponse(
           "No student account found with this email. Please register first.",
           404
-      )
+        )
+      );
     }
 
     // Check if password matches
