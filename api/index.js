@@ -53,8 +53,6 @@ app.get("/health", (req, res) => {
 // Get all documents (SAG Bureau only)
 app.get(
   "/all",
-  auth,
-  authorize("sag_bureau", "finance_bureau"),
   async (req, res) => {
     try {
       const documents = await Document.find()
