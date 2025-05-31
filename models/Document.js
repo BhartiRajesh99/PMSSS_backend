@@ -33,11 +33,23 @@ const documentSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    verifiedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "SAG",
+    verificationDetails: {
+      verifiedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "SAG",
+      },
+      verifiedAt: Date,
+      remarks: String,
     },
-    verifiedAt: Date,
+    paymentDetails: {
+      processedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Finance",
+      },
+      processedAt: Date,
+      remarks: String
+    },
+    paymentStatus: String,
   },
   {
     timestamps: true,
