@@ -7,7 +7,6 @@ import Finance from "../models/Finance.js";
 // Protect routes
 export const protect = async (req, res, next) => {
   let token;
-  console.log("here1");
 
   if (
     req.headers.authorization &&
@@ -16,12 +15,12 @@ export const protect = async (req, res, next) => {
     // Set token from Bearer token in header
     token = req.headers.authorization.split(" ")[1];
   }
-  console.log("here2");
+
   // Make sure token exists
   if (!token) {
     return next(new ErrorResponse("Not authorized to access this route", 401));
   }
-  console.log("here3");
+
   try {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -56,9 +55,9 @@ export const protect = async (req, res, next) => {
 };
 
 // Grant access to specific roles
-export const authorize = (roles) => {
+export const authorize = (...roles) => {
   return (req, res, next) => {
-    if (roles !== req.user.role) {
+    if (!roles.includes(req.user.role)) {
       return next(
         new ErrorResponse(
           `User role ${req.user.role} is not authorized to access this route`,
