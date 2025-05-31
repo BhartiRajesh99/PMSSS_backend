@@ -10,7 +10,7 @@ router.post(
   protect,
   authorize("finance_bureau"),
   [
-    body("status").isIn(["processing", "paid", "reject"]).withMessage("Invalid status"),
+    body("status").isIn(["processing", "paid", "rejected"]).withMessage("Invalid status"),
     body("remarks")
       .optional()
       .trim()
