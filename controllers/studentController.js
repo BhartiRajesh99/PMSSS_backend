@@ -88,7 +88,7 @@ export const uploadDocuments = async (req, res, next) => {
 // @access  Private
 export const getStudentDocuments = async (req, res, next) => {
   try {
-    const documents = await Document.find({ student: req.user._id }).sort({
+    const documents = await Document.find().sort({
       createdAt: -1,
     });
 
