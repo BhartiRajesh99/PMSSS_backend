@@ -66,7 +66,7 @@ export const getStudentApplications = async (req, res, next) => {
 // @access  Private (SAG only)
 export const reviewStudentApplication = async (req, res, next) => {
   try {
-    const { status, remarks } = req.body;
+    const { status, remarks, verificationDetails } = req.body;
     const student = await Student.findById(req.params.id);
 
     if (!student) {
@@ -81,8 +81,8 @@ export const reviewStudentApplication = async (req, res, next) => {
 
     student.application.status = status;
     student.application.sagRemarks = remarks;
-    student.application.reviewedBy = req.user.id;
-    student.application.reviewedAt = Date.now();
+    student.application.reviewedBy = verificationDetails.verifiedBy;
+    student.application.reviewedAt = verificationDetails.verifiedAt;
 
     await student.save();
 
