@@ -15,7 +15,7 @@ const router = express.Router();
 
 // All routes are protected and require finance role
 router.use(protect);
-router.use(authorize("finance"));
+router.use(authorize("finance_bureau"));
 
 // Profile management
 router.get("/profile", getFinanceProfile);
