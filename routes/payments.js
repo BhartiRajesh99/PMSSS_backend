@@ -71,9 +71,9 @@ router.get("/all", protect, authorize("finance_bureau"), async (req, res) => {
   try {
     const documents = await Document.find({ status: "verified" })
       .populate("student", "name email studentDetails")
-      .populate("verificationDetails.verifiedBy", "name")
-      .populate("paymentDetails.processedBy", "name")
-      .sort({ "paymentDetails.processedAt": -1 });
+      // .populate("verificationDetails.verifiedBy", "name")
+      // .populate("paymentDetails.processedBy", "name")
+      // .sort({ "paymentDetails.processedAt": -1 });
     res.json(documents);
   } catch (error) {
     res.status(500).json({ message: "Error fetching payments" });

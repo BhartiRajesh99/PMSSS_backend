@@ -80,7 +80,7 @@ export const reviewStudentApplication = async (req, res, next) => {
     }
 
     student.application.status = status;
-    student.application.sagRemarks = remarks;
+    student.application.comments = remarks;
     student.application.reviewedBy = verificationDetails.verifiedBy;
     student.application.reviewedAt = verificationDetails.verifiedAt;
 

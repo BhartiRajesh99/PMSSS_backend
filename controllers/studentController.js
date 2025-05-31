@@ -67,7 +67,7 @@ export const uploadDocuments = async (req, res, next) => {
       );
     }
 
-    const documentUrls = req.files.map((file) => file.path);
+    const documentUrls = req.files.map((file) => file.fileUrl);
     const student = await Student.findByIdAndUpdate(
       req.user.id,
       { $push: { documents: { $each: documentUrls } } },
