@@ -57,8 +57,8 @@ router.post(
 // Get pending documents (SAG Bureau only)
 router.get("/pending", protect, authorize("sag_bureau"), async (req, res) => {
   try {
-    const documents = await Document.find({ status: "pending" })
-      .populate("student", "name email studentDetails")
+    const documents = await Document.find()
+      .populate("student", "name email personalDetails academicDetails")
       .sort({ createdAt: -1 });
     res.json(documents);
   } catch (error) {

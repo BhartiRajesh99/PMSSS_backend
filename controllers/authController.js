@@ -402,10 +402,10 @@ export const getMe = async (req, res, next) => {
       case "student":
         user = await Student.findById(req.user.id);
         break;
-      case "sag":
+      case "sag_bureau":
         user = await SAG.findById(req.user.id);
         break;
-      case "finance":
+      case "finance_bureau":
         user = await Finance.findById(req.user.id);
         break;
       default:
